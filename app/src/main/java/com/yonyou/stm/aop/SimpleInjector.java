@@ -12,6 +12,7 @@ import java.util.Collection;
  */
 
 public class SimpleInjector implements Injector {
+
     @Override
     public void inject(Object target) {
         Collection<Field> fields = getFields(target.getClass());

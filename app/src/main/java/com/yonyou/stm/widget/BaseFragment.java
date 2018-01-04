@@ -4,10 +4,14 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.CallSuper;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import  android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
+import com.yonyou.stm.aop.InjectorFactory;
 import com.yonyou.stm.ctx.Constants;
 
 /**
@@ -15,6 +19,15 @@ import com.yonyou.stm.ctx.Constants;
  */
 
 public abstract class BaseFragment extends Fragment {
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        InjectorFactory.getInjector().inject(this);
+    }
+
+
 
     protected void checkPermission(String[] permissions,CheckPermissionCallback callback)
     {

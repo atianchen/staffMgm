@@ -15,7 +15,12 @@ public class Constants {
 
     public final static String FILEPROVIDER = "com.yonyou.stm.fileprovider";
 
-    public final static String BAIDU_ACCESSKEY = "738045826a394f3c9fb11f5c37d554ed";
-    public final static String BAIDU_SECRETKEY = "4a0fbe93cb8e4d06bf012bc970fb7182";
+    public final static String BAIDU_APIKEY = "UyHqkaqdUmEvvMUQZPl3B5b7";
+    public final static String BAIDU_SECRETKEY = "xLtmBSKFTqg7tFn42EzYDRMzFNKxebs0";
+
+    public final static String PARAMKEY_BAIDUOCR_TOKEN = "baidu.ocr.token";
+
+    public final static int HANDLER_RESULT_OCRINIT_OK = 0x5001;
+    public final static int HANDLER_RESULT_OCRINIT_ERROR = 0x5003;
 
 }

@@ -31,4 +31,5 @@ dependencies {
     implementation 'commons-lang:commons-lang:2.6'
     implementation 'com.google.code.gson:gson:2.2.4'
     implementation 'commons-io:commons-io:2.5'
+    implementation files('libs/ocr-sdk.jar')
 }

@@ -23,4 +23,6 @@ public class Constants {
     public final static int HANDLER_RESULT_OCRINIT_OK = 0x5001;
     public final static int HANDLER_RESULT_OCRINIT_ERROR = 0x5003;
 
+    public final static String BUNDLE_KEY_STAFF = "staff";
+
 }

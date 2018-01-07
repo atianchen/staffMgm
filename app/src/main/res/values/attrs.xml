@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TxtEdit">
+        <attr name="te_title" format="string" />
+        <attr name="te_content" format="string" />
+        <attr name="te_bottom" format="boolean" />
+        <attr name="te_required" format="boolean"/>
+        <attr name="te_editable" format="boolean"/>
+        <attr name="te_hint" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="TxtStar">
+        <attr name="ts_title" format="string" />
+        <attr name="ts_star" format="integer" />
+        <attr name="ts_bottom" format="boolean" />
+        <attr name="ts_required" format="boolean"/>
+        <attr name="ts_editable" format="boolean"/>
+    </declare-styleable>
+</resources>

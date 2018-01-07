@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="btnSave">
+        <item name="android:background">@drawable/btn_save</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="btnBack">
+        <item name="android:background">@drawable/btn_back</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
 </resources>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/txt_edit"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
+    android:layout_margin="0.1dp"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal">
+    <TextView
+        android:id="@+id/txtedit_title"
+        android:layout_width="350dp"
+        android:layout_weight="2"
+        android:layout_marginLeft="30dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textSize="16sp"
+        />
+    <EditText
+        android:id="@+id/txtedit_content"
+        android:layout_weight="1"
+        android:textCursorDrawable="@null"
+        android:layout_width="fill_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:background="@null"
+        />
+    </LinearLayout>
+    <View
+        android:id="@+id/txtedit_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="0dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark" />
+</RelativeLayout>

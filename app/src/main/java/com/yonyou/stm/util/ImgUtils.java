@@ -1,7 +1,6 @@
 package com.yonyou.stm.util;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -10,6 +9,8 @@ import android.os.Build;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 
 /**
@@ -103,4 +104,17 @@ public class ImgUtils {
         return bitmap;
     }
 
+    public static File imageZoom(File file , double size) {
+        try {
+            Bitmap bitmap=BitmapFactory.decodeFile(file.getAbsolutePath());
+            Bitmap zoomBitmap = imageZoom(bitmap, size);
+            final FileOutputStream out = new FileOutputStream(file);
+            zoomBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.flush();
+            out.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return file;
+    }
 }

@@ -4,8 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,13 +15,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.baidu.ocr.sdk.OCR;
+import com.baidu.ocr.sdk.OnResultListener;
+import com.baidu.ocr.sdk.exception.OCRError;
+import com.baidu.ocr.sdk.model.IDCardParams;
+import com.baidu.ocr.sdk.model.IDCardResult;
+import com.yonyou.stm.MainActivity;
 import com.yonyou.stm.R;
 import com.yonyou.stm.api.req.ocr.OcrConfig;
 import com.yonyou.stm.api.req.ocr.OcrImg;
 import com.yonyou.stm.api.req.ocr.OcrInputs;
 import com.yonyou.stm.api.req.ocr.OcrReq;
 import com.yonyou.stm.ctx.Constants;
+import com.yonyou.stm.domain.Staff;
+import com.yonyou.stm.service.StaffService;
+import com.yonyou.stm.service.LogService;
 import com.yonyou.stm.util.FileUtils;
 import com.yonyou.stm.util.HttpUtils;
 import com.yonyou.stm.util.ImgUtils;
@@ -58,7 +67,6 @@ public class HomeFragment extends BaseFragment implements Runnable {
     private ImageView imgView;
 
     private View view;
-
 
     private OnFragmentInteractionListener mListener;
 
@@ -158,17 +166,44 @@ public class HomeFragment extends BaseFragment implements Runnable {
         });
     }
 
+    private void recIDCard(String idCardSide,final String filePath) {
+        IDCardParams param = new IDCardParams();
+        param.setImageFile(new File(filePath));
+        // 设置身份证正反面
+        param.setIdCardSide(idCardSide);
+        // 设置方向检测
+        param.setDetectDirection(true);
+
+        OCR.getInstance().recognizeIDCard(param, new OnResultListener<IDCardResult>() {
+            @Override
+            public void onResult(IDCardResult result) {
+                if (result != null) {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), StaffSetActivity.class);
+                    intent.putExtra(Constants.BUNDLE_KEY_STAFF,  new Staff(result,ImgUtils.getBase64(getActivity(),HomeFragment.this.imageUri)));
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onError(OCRError error) {
+                Toast.makeText(getActivity(), "识别失败，请重新拍照", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // 相机拍照完成后，返回图片路径
         if (requestCode == Constants.REQUESTCODE_CAMERA) {
             if (resultCode == Activity.RESULT_OK) {
                 if (mTmpFile != null) {
+                    mTmpFile = ImgUtils.imageZoom(mTmpFile,1024);
                     this.imgView.setImageURI(FileUtils.getFileUri(this.getContext(),mTmpFile));
-
                     this.imageUri = FileUtils.getFileUri(this.getContext(),mTmpFile);
                     Thread thread = new Thread(this);
                     thread.start();
+                    recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, mTmpFile.getAbsolutePath());
                 }
             } else {
                 if (mTmpFile != null && mTmpFile.exists()) {

@@ -21,8 +21,10 @@ import com.baidu.ocr.sdk.OnResultListener;
 import com.baidu.ocr.sdk.exception.OCRError;
 import com.baidu.ocr.sdk.model.AccessToken;
 import com.yonyou.stm.action.HomeFragment;
+import com.yonyou.stm.action.StaffListFragment;
 import com.yonyou.stm.ctx.AppContext;
 import com.yonyou.stm.ctx.Constants;
+import com.yonyou.stm.service.ServiceFactory;
 import com.yonyou.stm.util.DlgHelper;
 
 import static android.content.ContentValues.TAG;
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     private boolean inited = false;
 
+    private boolean hasGotToken = false;
+
     private Handler handler;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -44,10 +48,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-
+                    changeFragment(HomeFragment.newInstance(),false);
                     return true;
                 case R.id.navigation_dashboard:
-
+                    changeFragment(StaffListFragment.newInstance(),false);
                     return true;
                 case R.id.navigation_notifications:
 
@@ -97,6 +101,12 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
             }, getApplicationContext(), Constants.BAIDU_APIKEY, Constants.BAIDU_SECRETKEY);
         }
 
+        try {
+            ServiceFactory.initFactory(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        initAccessTokenWithAkSk();
     }
 
     private  void changeFragment(Fragment f, boolean init){
@@ -110,6 +120,21 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    private void initAccessTokenWithAkSk() {
+        OCR.getInstance().initAccessTokenWithAkSk(new OnResultListener<AccessToken>() {
+            @Override
+            public void onResult(AccessToken result) {
+                String token = result.getAccessToken();
+                hasGotToken = true;
+            }
+
+            @Override
+            public void onError(OCRError error) {
+                error.printStackTrace();
+            }
+        }, getApplicationContext(), Constants.BAIDU_APIKEY, Constants.BAIDU_SECRETKEY);
     }
 
 }

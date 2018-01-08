@@ -15,4 +15,10 @@
         <attr name="ts_required" format="boolean"/>
         <attr name="ts_editable" format="boolean"/>
     </declare-styleable>
+    <declare-styleable name="TxtImg">
+        <attr name="ti_title" format="string" />
+        <attr name="ti_img1" format="reference" />
+        <attr name="ti_img2" format="reference" />
+        <attr name="ti_bottom" format="boolean" />
+    </declare-styleable>
 </resources>

@@ -10,8 +10,11 @@ import android.widget.Toast;
 import com.yonyou.stm.R;
 import com.yonyou.stm.ctx.Constants;
 import com.yonyou.stm.domain.Staff;
+import com.yonyou.stm.service.LogService;
 import com.yonyou.stm.service.StaffService;
+import com.yonyou.stm.util.ImgUtils;
 import com.yonyou.stm.widget.TxtEdit;
+import com.yonyou.stm.widget.TxtImg;
 import com.yonyou.stm.widget.TxtStar;
 
 import org.apache.commons.lang.StringUtils;
@@ -27,10 +30,20 @@ public class StaffSetActivity extends AppCompatActivity {
     private StaffService staffService;
     private Staff staff;
 
+    private TxtImg img;
+    private TxtEdit name;
+    private TxtEdit idNumber;
+    private TxtEdit gender;
+    private TxtEdit ethnic;
+    private TxtEdit birthday;
+    private TxtEdit addr;
+    private TxtEdit issueAuth;
+    private TxtEdit limitDate;
     private TxtEdit workYears;
     private TxtEdit dispatch;
     private TxtEdit salary;
     private TxtStar credit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,28 +55,20 @@ public class StaffSetActivity extends AppCompatActivity {
     }
 
     public void init(){
-        ((TxtEdit)findViewById(R.id.edit_name)).setText(staff.getName());
-        ((TxtEdit)findViewById(R.id.edit_idNumber)).setText(staff.getIdNumber());
-        ((TxtEdit)findViewById(R.id.edit_gender)).setText(staff.getGender());
-        ((TxtEdit)findViewById(R.id.edit_ethnic)).setText(staff.getEthnic());
-        ((TxtEdit)findViewById(R.id.edit_birthday)).setText(staff.getBirthday());
-        ((TxtEdit)findViewById(R.id.edit_addr)).setText(staff.getAddr());
+        img = ((TxtImg)findViewById(R.id.edit_img));
+        name = ((TxtEdit)findViewById(R.id.edit_name));
+        idNumber = ((TxtEdit)findViewById(R.id.edit_idNumber));
+        gender = ((TxtEdit)findViewById(R.id.edit_gender));
+        ethnic = ((TxtEdit)findViewById(R.id.edit_ethnic));
+        birthday = ((TxtEdit)findViewById(R.id.edit_birthday));
+        addr = ((TxtEdit)findViewById(R.id.edit_addr));
+        issueAuth = ((TxtEdit)findViewById(R.id.edit_issueAuth));
+        limitDate = ((TxtEdit)findViewById(R.id.edit_limitDate));
         workYears = (TxtEdit) findViewById(R.id.edit_workYears);
-        if(staff.getWorkYears() != null) {
-            workYears.setText(staff.getWorkYears().toString());
-        }
         dispatch = (TxtEdit)findViewById(R.id.edit_dispatch);
-        if(StringUtils.isNotBlank(staff.getDispatch())) {
-            dispatch.setText(staff.getDispatch());
-        }
         salary = (TxtEdit)findViewById(R.id.edit_salary);
-        if(staff.getSalary() != null) {
-            salary.setText(staff.getSalary().toString());
-        }
         credit = (TxtStar) findViewById(R.id.edit_credit);
-        if(staff.getCredit() != null) {
-            credit.setRatingBar(staff.getCredit());
-        }
+        setValue();
         ((Button)findViewById(R.id.btn_save)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +83,30 @@ public class StaffSetActivity extends AppCompatActivity {
         });
     }
 
+    private void setValue(){
+        img.setImageBitmaps(ImgUtils.base64ToBitmap(staff.getFrontImg()),ImgUtils.base64ToBitmap(staff.getFrontImg()));
+        name.setText(staff.getName());
+        idNumber.setText(staff.getIdNumber());
+        gender.setText(staff.getGender());
+        ethnic.setText(staff.getEthnic());
+        birthday.setText(staff.getBirthday());
+        addr.setText(staff.getAddr());
+        issueAuth.setText(staff.getIssueAuth());
+        limitDate.setText(staff.getSignDate()+"-"+staff.getExpiryDate());
+        if(staff.getWorkYears() != null) {
+            workYears.setText(staff.getWorkYears().toString());
+        }
+        if(StringUtils.isNotBlank(staff.getDispatch())) {
+            dispatch.setText(staff.getDispatch());
+        }
+        if(staff.getSalary() != null) {
+            salary.setText(staff.getSalary().toString());
+        }
+        if(staff.getCredit() != null) {
+            credit.setRatingBar(staff.getCredit());
+        }
+    }
+
     private void save(){
         if(staffService ==null){
             staffService = new StaffService(StaffSetActivity.this);
@@ -90,6 +119,14 @@ public class StaffSetActivity extends AppCompatActivity {
             Toast.makeText(this.getApplicationContext(), "薪资请输入数字", Toast.LENGTH_SHORT).show();
             return;
         }
+        staff.setName(name.getText());
+        staff.setIdNumber(idNumber.getText());
+        staff.setGender(gender.getText());
+        staff.setEthnic(ethnic.getText());
+        staff.setBirthday(birthday.getText());
+        staff.setAddr(addr.getText());
+        staff.setIssueAuth(issueAuth.getText());
+        staff.setExpiryDate(limitDate.getText());
         staff.setWorkYears(Double.parseDouble(workYears.getText()));
         staff.setDispatch(dispatch.getText());
         staff.setSalary(Double.parseDouble(salary.getText()));
@@ -103,5 +140,4 @@ public class StaffSetActivity extends AppCompatActivity {
         Pattern pattern = Pattern.compile("^[0-9]+(.[0-9]*)?$");
         return pattern.matcher(str).matches();
     }
-
 }

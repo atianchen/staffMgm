@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.yonyou.stm.R;
 
 /**
+ * 属性和属性值选择（特指评5颗星）
  * Created by lsq on 2018/1/7.
  */
 

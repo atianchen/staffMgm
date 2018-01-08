@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.ocr.sdk.OCR;
@@ -23,7 +22,6 @@ import com.baidu.ocr.sdk.OnResultListener;
 import com.baidu.ocr.sdk.exception.OCRError;
 import com.baidu.ocr.sdk.model.IDCardParams;
 import com.baidu.ocr.sdk.model.IDCardResult;
-import com.yonyou.stm.MainActivity;
 import com.yonyou.stm.R;
 import com.yonyou.stm.api.req.ocr.OcrConfig;
 import com.yonyou.stm.api.req.ocr.OcrImg;
@@ -31,7 +29,6 @@ import com.yonyou.stm.api.req.ocr.OcrInputs;
 import com.yonyou.stm.api.req.ocr.OcrReq;
 import com.yonyou.stm.ctx.Constants;
 import com.yonyou.stm.domain.Staff;
-import com.yonyou.stm.service.StaffService;
 import com.yonyou.stm.service.LogService;
 import com.yonyou.stm.util.FileUtils;
 import com.yonyou.stm.util.HttpUtils;
@@ -60,15 +57,23 @@ import static com.yonyou.stm.ctx.Constants.OCR_AppCode;
 public class HomeFragment extends BaseFragment implements Runnable {
     // TODO: Rename parameter arguments, choose names that match
 
+    private final static Integer IMGGLAG_FRONT = 1;
+    private final static Integer IMGFLAG_BACK = 2;
+
     private File mTmpFile;
 
     private Uri imageUri;
 
-    private ImageView imgView;
+    private ImageView imgViewFront;
+    private ImageView imgViewBack;
 
     private View view;
 
     private OnFragmentInteractionListener mListener;
+
+    private Integer imgFlag = IMGGLAG_FRONT;
+
+    private Staff staff;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -97,7 +102,8 @@ public class HomeFragment extends BaseFragment implements Runnable {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.fragment_home, container, false);
-        imgView =  view.findViewById(R.id.idview);
+        imgViewFront =  view.findViewById(R.id.idFrontView);
+        imgViewBack =  view.findViewById(R.id.idBackView);
         ImageButton btn = (ImageButton) view.findViewById(R.id.btn_scan);
         btn.setOnClickListener(new View.OnClickListener()
         {
@@ -178,10 +184,23 @@ public class HomeFragment extends BaseFragment implements Runnable {
             @Override
             public void onResult(IDCardResult result) {
                 if (result != null) {
-                    Intent intent = new Intent();
-                    intent.setClass(getActivity(), StaffSetActivity.class);
-                    intent.putExtra(Constants.BUNDLE_KEY_STAFF,  new Staff(result,ImgUtils.getBase64(getActivity(),HomeFragment.this.imageUri)));
-                    startActivity(intent);
+                    try {
+                        if (imgFlag == IMGGLAG_FRONT) {
+                            staff = new Staff(result, ImgUtils.getBase64(getActivity(), HomeFragment.this.imageUri));
+                            imgFlag = IMGFLAG_BACK;
+                        } else {
+                            imgFlag = IMGGLAG_FRONT;
+                            staff.setBackInfo(result, ImgUtils.getBase64(getActivity(), HomeFragment.this.imageUri));
+                            Intent intent = new Intent();
+                            intent.setClass(getActivity(), StaffSetActivity.class);
+                            intent.putExtra(Constants.BUNDLE_KEY_STAFF, staff);
+                            getActivity().startActivity(intent);
+                        }
+                    }catch (Exception e){
+                        Toast.makeText(getActivity(), "识别失败，请重新拍照", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+
                 }
             }
 
@@ -199,11 +218,18 @@ public class HomeFragment extends BaseFragment implements Runnable {
             if (resultCode == Activity.RESULT_OK) {
                 if (mTmpFile != null) {
                     mTmpFile = ImgUtils.imageZoom(mTmpFile,1024);
-                    this.imgView.setImageURI(FileUtils.getFileUri(this.getContext(),mTmpFile));
                     this.imageUri = FileUtils.getFileUri(this.getContext(),mTmpFile);
-                    Thread thread = new Thread(this);
-                    thread.start();
-                    recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, mTmpFile.getAbsolutePath());
+                    if(imgFlag == IMGGLAG_FRONT) {
+                        //正面
+                        this.imgViewFront.setImageURI(FileUtils.getFileUri(this.getContext(), mTmpFile));
+                        recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, mTmpFile.getAbsolutePath());
+                    }else{
+                        //背面
+                        this.imgViewBack.setImageURI(FileUtils.getFileUri(this.getContext(), mTmpFile));
+                        recIDCard(IDCardParams.ID_CARD_SIDE_BACK, mTmpFile.getAbsolutePath());
+                    }
+                    /*Thread thread = new Thread(this);
+                    thread.start();*/
                 }
             } else {
                 if (mTmpFile != null && mTmpFile.exists()) {

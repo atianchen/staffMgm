@@ -4,12 +4,15 @@
     <string name="title_dashboard">查询</string>
     <string name="title_notifications">通知</string>
 
+    <string name="staff_img">身份证</string>
     <string name="staff_name">姓名</string>
     <string name="staff_idNumber">身份证号</string>
     <string name="staff_gender">性别</string>
     <string name="staff_ethnic">民族</string>
     <string name="staff_birthday">生日</string>
     <string name="staff_addr">地址</string>
+    <string name="staff_issueAuth">签发机关</string>
+    <string name="staff_limitDate">有效期限</string>
     <string name="staff_workYears">工龄（年）</string>
     <string name="staff_dispatch">外派单位</string>
     <string name="staff_salary">薪资（元）</string>

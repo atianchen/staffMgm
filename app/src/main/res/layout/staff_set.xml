@@ -10,47 +10,67 @@
     android:layout_height="match_parent"
     xmlns:yongyou="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+    <com.yonyou.stm.widget.TxtImg
+        android:id="@+id/edit_img"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        yongyou:ti_title="@string/staff_img">
+    </com.yonyou.stm.widget.TxtImg>
     <com.yonyou.stm.widget.TxtEdit
         android:id="@+id/edit_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         yongyou:te_title="@string/staff_name"
-        yongyou:te_editable="false">
+        yongyou:te_editable="true">
     </com.yonyou.stm.widget.TxtEdit>
     <com.yonyou.stm.widget.TxtEdit
         android:id="@+id/edit_idNumber"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         yongyou:te_title="@string/staff_idNumber"
-        yongyou:te_editable="false">
+        yongyou:te_editable="true">
     </com.yonyou.stm.widget.TxtEdit>
     <com.yonyou.stm.widget.TxtEdit
         android:id="@+id/edit_gender"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         yongyou:te_title="@string/staff_gender"
-        yongyou:te_editable="false">
+        yongyou:te_editable="true">
     </com.yonyou.stm.widget.TxtEdit>
     <com.yonyou.stm.widget.TxtEdit
         android:id="@+id/edit_ethnic"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         yongyou:te_title="@string/staff_ethnic"
-        yongyou:te_editable="false">
+        yongyou:te_editable="true">
     </com.yonyou.stm.widget.TxtEdit>
     <com.yonyou.stm.widget.TxtEdit
         android:id="@+id/edit_birthday"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         yongyou:te_title="@string/staff_birthday"
-        yongyou:te_editable="false">
+        yongyou:te_editable="true">
     </com.yonyou.stm.widget.TxtEdit>
     <com.yonyou.stm.widget.TxtEdit
         android:id="@+id/edit_addr"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         yongyou:te_title="@string/staff_addr"
-        yongyou:te_editable="false">
+        yongyou:te_editable="true">
+    </com.yonyou.stm.widget.TxtEdit>
+    <com.yonyou.stm.widget.TxtEdit
+        android:id="@+id/edit_issueAuth"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        yongyou:te_title="@string/staff_issueAuth"
+        yongyou:te_editable="true">
+    </com.yonyou.stm.widget.TxtEdit>
+    <com.yonyou.stm.widget.TxtEdit
+        android:id="@+id/edit_limitDate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        yongyou:te_title="@string/staff_limitDate"
+        yongyou:te_editable="true">
     </com.yonyou.stm.widget.TxtEdit>
     <com.yonyou.stm.widget.TxtEdit
         android:id="@+id/edit_workYears"

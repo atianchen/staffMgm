@@ -16,9 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
 
-dependencies {
+    apply plugin: 'org.greenrobot.greendao'
+}
+    dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
@@ -34,4 +35,6 @@ dependencies {
     implementation files('libs/ocr-sdk.jar')
     implementation 'com.j256.ormlite:ormlite-core:5.0'
     implementation 'com.j256.ormlite:ormlite-android:5.0'
+    implementation 'org.greenrobot:greendao:3.0.1'
+    implementation 'org.greenrobot:greendao-generator:3.0.0'
 }

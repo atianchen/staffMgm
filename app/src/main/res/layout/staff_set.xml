@@ -65,13 +65,12 @@
         yongyou:te_title="@string/staff_issueAuth"
         yongyou:te_editable="true">
     </com.yonyou.stm.widget.TxtEdit>
-    <com.yonyou.stm.widget.TxtEdit
+    <com.yonyou.stm.widget.TxtEditRange
         android:id="@+id/edit_limitDate"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        yongyou:te_title="@string/staff_limitDate"
-        yongyou:te_editable="true">
-    </com.yonyou.stm.widget.TxtEdit>
+        yongyou:ter_title="@string/staff_limitDate">
+    </com.yonyou.stm.widget.TxtEditRange>
     <com.yonyou.stm.widget.TxtEdit
         android:id="@+id/edit_workYears"
         android:layout_width="fill_parent"

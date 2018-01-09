@@ -7,7 +7,7 @@ public interface BaseService<T extends BaseEntity> {
 
 	void save(T entity);
 	
-	T load(String id);
+	T load(long id);
 	
 	void remove(T entity);
 	

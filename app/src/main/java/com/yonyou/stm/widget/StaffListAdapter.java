@@ -26,13 +26,13 @@ public class StaffListAdapter extends BaseAdapter {
 
     private Activity context;
     private LayoutInflater inflater = null;
-    private StaffService staffService;
+   private StaffService staffService;
     private List<Staff> staffs;
 
-    public StaffListAdapter(Activity context, StaffService staffService){
+    public StaffListAdapter(Activity context){
         super();
         this.context = context;
-        this.staffService = staffService;
+       this.staffService = new StaffService();
         staffs = this.staffService.loadAll();
         inflater = LayoutInflater.from(context);
     }
@@ -64,7 +64,7 @@ public class StaffListAdapter extends BaseAdapter {
         }
         if (staffs != null && staffs.size()>0) {
             holder.name.setText(staffs.get(i).getName());
-            holder.id.setText(staffs.get(i).getId().toString());
+            //holder.id.setText(staffs.get(i).getId().toString());
         }
         return view;
     }

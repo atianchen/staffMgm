@@ -1,29 +1,44 @@
 package com.yonyou.stm.service;
 
-import android.content.Context;
-
+import com.yonyou.stm.StmApp;
 import com.yonyou.stm.domain.Staff;
-import com.yonyou.stm.err.DbError;
+import com.yonyou.stm.domain.StaffDao;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Created by lsq on 2018/1/6.
+ * Created by lsq on 2018/1/9.
  */
 
-public class StaffService extends OrmCrudService<Staff>{
+public class StaffService implements BaseService<Staff>{
 
-    public StaffService(Context context) {
-        super(context);
+    private StaffDao staffDao;
+
+    public StaffService(){
+        staffDao = StmApp.getInstances().getDaoSession().getStaffDao();
+    }
+
+    @Override
+    public void save(Staff entity) {
+        staffDao.insert(entity);
+    }
+
+    @Override
+    public Staff load(long id) {
+        return staffDao.load(id);
+    }
+
+    @Override
+    public void remove(Staff entity) {
+
+    }
+
+    @Override
+    public void release() {
+
     }
 
     public List<Staff> loadAll() {
-        try {
-            return this.dao.queryForAll();
-        } catch (SQLException e) {
-            throw new DbError(e);
-        }
+        return staffDao.loadAll();
     }
-
 }

@@ -21,4 +21,11 @@
         <attr name="ti_img2" format="reference" />
         <attr name="ti_bottom" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="TxtEditRange">
+        <attr name="ter_title" format="string" />
+        <attr name="ter_content1" format="string" />
+        <attr name="ter_content2" format="string" />
+        <attr name="ter_required" format="boolean"/>
+        <attr name="ter_bottom" format="boolean" />
+    </declare-styleable>
 </resources>

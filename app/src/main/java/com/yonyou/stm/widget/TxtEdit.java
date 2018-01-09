@@ -15,6 +15,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.yonyou.stm.R;
+import com.yonyou.stm.widget.event.OnEditClickListener;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -84,6 +85,21 @@ public class TxtEdit extends LinearLayout {
             text = editContent.getText().toString();
         }
         return text;
+    }
+
+    public void setOnEditClickListener(final OnEditClickListener listener) {
+        editContent.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                listener.onClick(arg0);
+            }
+        });
+        editContent.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                listener.onFocusChange(v,hasFocus);
+            }
+        });
     }
 }
 

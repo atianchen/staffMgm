@@ -1,6 +1,6 @@
 package com.yonyou.stm.aop;
 
-import com.yonyou.stm.err.InjectError;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,8 +38,8 @@ public class ServiceDepot {
                 }
             }
             try {
-                if (implClass==null)
-                    throw new InjectError("Not found Impl for "+interfaceCls.getName());
+               /* if (implClass==null)
+                    throw new InjectError("Not found Impl for "+interfaceCls.getName());*/
                 Object serviceImpl = implClass.newInstance();
                 implMap.put(interfaceCls,serviceImpl);
                 return serviceImpl;
@@ -47,8 +47,9 @@ public class ServiceDepot {
             catch (Exception e)
             {
                 e.printStackTrace();
-                throw new InjectError(e);
+               // throw new InjectError(e);
             }
+            return null;
         }
     }
 }

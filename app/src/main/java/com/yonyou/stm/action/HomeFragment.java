@@ -57,22 +57,19 @@ import static com.yonyou.stm.ctx.Constants.OCR_AppCode;
 public class HomeFragment extends BaseFragment implements Runnable {
     // TODO: Rename parameter arguments, choose names that match
 
-    private final static Integer IMGGLAG_FRONT = 1;
-    private final static Integer IMGFLAG_BACK = 2;
-
     private File mTmpFile;
 
-    private Uri imageUri;
+    //private Uri imageUri;
 
     private ImageView imgViewFront;
     private ImageView imgViewBack;
+    private ImageButton btn;
 
     private View view;
 
     private OnFragmentInteractionListener mListener;
 
-    private Integer imgFlag = IMGGLAG_FRONT;
-
+    private String idCardSide = IDCardParams.ID_CARD_SIDE_FRONT;
     private Staff staff;
 
     public HomeFragment() {
@@ -104,7 +101,7 @@ public class HomeFragment extends BaseFragment implements Runnable {
         view =  inflater.inflate(R.layout.fragment_home, container, false);
         imgViewFront =  view.findViewById(R.id.idFrontView);
         imgViewBack =  view.findViewById(R.id.idBackView);
-        ImageButton btn = (ImageButton) view.findViewById(R.id.btn_scan);
+        btn = (ImageButton) view.findViewById(R.id.btn_scan);
         btn.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View var1)
@@ -172,9 +169,39 @@ public class HomeFragment extends BaseFragment implements Runnable {
         });
     }
 
-    private void recIDCard(String idCardSide,final String filePath) {
+    private void recIDCard() {
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // 相机拍照完成后，返回图片路径
+        if (requestCode == Constants.REQUESTCODE_CAMERA) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (mTmpFile != null) {
+                    btn.setClickable(false);
+                    mTmpFile = ImgUtils.imageZoom(mTmpFile,1024);
+                    //this.imageUri = FileUtils.getFileUri(this.getContext(),mTmpFile);
+                    if(idCardSide == IDCardParams.ID_CARD_SIDE_FRONT) {
+                        this.imgViewFront.setImageURI(FileUtils.getFileUri(this.getContext(), mTmpFile));
+                    }else{
+                        this.imgViewBack.setImageURI(FileUtils.getFileUri(this.getContext(), mTmpFile));
+                    }
+                   Thread thread = new Thread(HomeFragment.this);
+                    thread.start();
+                   //recIDCard();
+                }
+            } else {
+                if (mTmpFile != null && mTmpFile.exists()) {
+                    mTmpFile.delete();
+                }
+            }
+        }
+    }
+    public void run()
+    {
         IDCardParams param = new IDCardParams();
-        param.setImageFile(new File(filePath));
+        param.setImageFile(mTmpFile);
         // 设置身份证正反面
         param.setIdCardSide(idCardSide);
         // 设置方向检测
@@ -185,12 +212,16 @@ public class HomeFragment extends BaseFragment implements Runnable {
             public void onResult(IDCardResult result) {
                 if (result != null) {
                     try {
-                        if (imgFlag == IMGGLAG_FRONT) {
-                            staff = new Staff(result, ImgUtils.getBase64(getActivity(), HomeFragment.this.imageUri));
-                            imgFlag = IMGFLAG_BACK;
+                        btn.setClickable(true);
+                        if (idCardSide == IDCardParams.ID_CARD_SIDE_FRONT) {
+                            //拍照传值，正背面图片base64编码过大，无法进行页面传值，暂传图片路径
+                            staff = new Staff(result, mTmpFile.getAbsolutePath()/*ImgUtils.getBase64(getActivity(), HomeFragment.this.imageUri)*/);
+                            idCardSide = IDCardParams.ID_CARD_SIDE_BACK;
+                            Toast.makeText(getActivity(), "正面识别成功，请拍摄背面", Toast.LENGTH_SHORT).show();
                         } else {
-                            imgFlag = IMGGLAG_FRONT;
-                            staff.setBackInfo(result, ImgUtils.getBase64(getActivity(), HomeFragment.this.imageUri));
+                            idCardSide = IDCardParams.ID_CARD_SIDE_FRONT;
+                            staff.setBackInfo(result, mTmpFile.getAbsolutePath()/*ImgUtils.getBase64(getActivity(), HomeFragment.this.imageUri)*/);
+                            Toast.makeText(getActivity(), "背面识别成功", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent();
                             intent.setClass(getActivity(), StaffSetActivity.class);
                             intent.putExtra(Constants.BUNDLE_KEY_STAFF, staff);
@@ -209,38 +240,7 @@ public class HomeFragment extends BaseFragment implements Runnable {
                 Toast.makeText(getActivity(), "识别失败，请重新拍照", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // 相机拍照完成后，返回图片路径
-        if (requestCode == Constants.REQUESTCODE_CAMERA) {
-            if (resultCode == Activity.RESULT_OK) {
-                if (mTmpFile != null) {
-                    mTmpFile = ImgUtils.imageZoom(mTmpFile,1024);
-                    this.imageUri = FileUtils.getFileUri(this.getContext(),mTmpFile);
-                    if(imgFlag == IMGGLAG_FRONT) {
-                        //正面
-                        this.imgViewFront.setImageURI(FileUtils.getFileUri(this.getContext(), mTmpFile));
-                        recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, mTmpFile.getAbsolutePath());
-                    }else{
-                        //背面
-                        this.imgViewBack.setImageURI(FileUtils.getFileUri(this.getContext(), mTmpFile));
-                        recIDCard(IDCardParams.ID_CARD_SIDE_BACK, mTmpFile.getAbsolutePath());
-                    }
-                    /*Thread thread = new Thread(this);
-                    thread.start();*/
-                }
-            } else {
-                if (mTmpFile != null && mTmpFile.exists()) {
-                    mTmpFile.delete();
-                }
-            }
-        }
-    }
-    public void run()
-    {
-        String host = "http://dm-51.data.aliyun.com";
+       /* String host = "http://dm-51.data.aliyun.com";
         String path = "/rest/160601/ocr/ocr_idcard.json";
         String method = "POST";
         String appcode = OCR_AppCode;
@@ -267,7 +267,7 @@ public class HomeFragment extends BaseFragment implements Runnable {
             //System.out.println(EntityUtils.toString(response.getEntity()));
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 }

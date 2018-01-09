@@ -11,9 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.ocr.sdk.OCR;
@@ -24,10 +22,7 @@ import com.yonyou.stm.action.HomeFragment;
 import com.yonyou.stm.action.StaffListFragment;
 import com.yonyou.stm.ctx.AppContext;
 import com.yonyou.stm.ctx.Constants;
-import com.yonyou.stm.service.ServiceFactory;
 import com.yonyou.stm.util.DlgHelper;
-
-import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener {
 
@@ -101,11 +96,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
             }, getApplicationContext(), Constants.BAIDU_APIKEY, Constants.BAIDU_SECRETKEY);
         }
 
-        try {
-            ServiceFactory.initFactory(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         initAccessTokenWithAkSk();
     }
 

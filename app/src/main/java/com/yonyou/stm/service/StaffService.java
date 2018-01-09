@@ -1,8 +1,8 @@
 package com.yonyou.stm.service;
 
 import com.yonyou.stm.StmApp;
+import com.yonyou.stm.dao.StaffDao;
 import com.yonyou.stm.domain.Staff;
-import com.yonyou.stm.domain.StaffDao;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class StaffService implements BaseService<Staff>{
     }
 
     @Override
-    public Staff load(long id) {
+    public Staff load(Long id) {
         return staffDao.load(id);
     }
 

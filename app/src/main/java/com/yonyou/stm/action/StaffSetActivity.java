@@ -16,6 +16,7 @@ import com.yonyou.stm.domain.Staff;
 import com.yonyou.stm.service.StaffService;
 import com.yonyou.stm.util.FileUtils;
 import com.yonyou.stm.util.ImgUtils;
+import com.yonyou.stm.util.TimeUtils;
 import com.yonyou.stm.widget.TxtEdit;
 import com.yonyou.stm.widget.TxtEditRange;
 import com.yonyou.stm.widget.TxtImg;
@@ -25,6 +26,7 @@ import com.yonyou.stm.widget.event.OnEditClickListener;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
+import java.sql.Time;
 import java.text.DecimalFormat;
 import java.util.regex.Pattern;
 
@@ -46,6 +48,10 @@ public class StaffSetActivity extends AppCompatActivity implements OnEditClickLi
     private TxtEdit addr;
     private TxtEdit issueAuth;
     private TxtEditRange limitDate;
+    private TxtEdit phone;
+    private TxtEdit contactType;
+    private TxtEdit contactTel;
+    private TxtEdit entryDate;
     private TxtEdit workYears;
     private TxtEdit dispatch;
     private TxtEdit salary;
@@ -56,7 +62,7 @@ public class StaffSetActivity extends AppCompatActivity implements OnEditClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.staff_set);
-      staffService = new StaffService();
+        staffService = new StaffService();
         Intent intent = this.getIntent();
         if(intent.getExtras().containsKey(Constants.BUNDLE_KEY_STAFF)){
             //照片传值
@@ -65,7 +71,7 @@ public class StaffSetActivity extends AppCompatActivity implements OnEditClickLi
             staff.setBackImg(ImgUtils.getBase64(this, FileUtils.getFileUri(this,new File(staff.getBackImg()))));
         }else{
             //列表传值
-           staff = staffService.load((Integer) intent.getExtras().get(Constants.BUNDLE_KEY_STAFFID));
+           staff = staffService.load((Long) intent.getExtras().get(Constants.BUNDLE_KEY_STAFFID));
         }
 
         init();
@@ -81,6 +87,10 @@ public class StaffSetActivity extends AppCompatActivity implements OnEditClickLi
         addr = ((TxtEdit)findViewById(R.id.edit_addr));
         issueAuth = ((TxtEdit)findViewById(R.id.edit_issueAuth));
         limitDate = ((TxtEditRange)findViewById(R.id.edit_limitDate));
+        phone = ((TxtEdit)findViewById(R.id.edit_phone));
+        contactType = ((TxtEdit)findViewById(R.id.edit_contactType));
+        contactTel = ((TxtEdit)findViewById(R.id.edit_contactTel));
+        entryDate = ((TxtEdit)findViewById(R.id.edit_entryDate));
         workYears = (TxtEdit) findViewById(R.id.edit_workYears);
         dispatch = (TxtEdit)findViewById(R.id.edit_dispatch);
         salary = (TxtEdit)findViewById(R.id.edit_salary);
@@ -109,10 +119,14 @@ public class StaffSetActivity extends AppCompatActivity implements OnEditClickLi
         idNumber.setText(staff.getIdNumber());
         gender.setText(staff.getGender());
         ethnic.setText(staff.getEthnic());
-        birthday.setText(staff.getBirthday());
+        birthday.setText(TimeUtils.longToStr(staff.getBirthday()));
         addr.setText(staff.getAddr());
         issueAuth.setText(staff.getIssueAuth());
-        limitDate.setRange(staff.getSignDate(),staff.getExpiryDate());
+        limitDate.setRange(TimeUtils.longToStr(staff.getSignDate()),TimeUtils.longToStr(staff.getExpiryDate()));
+        phone.setText(staff.getPhone());
+        contactType.setText(staff.getContactType());
+        contactTel.setText(staff.getContactTel());
+        entryDate.setText(TimeUtils.longToStr(staff.getEntryDate()));
         if(staff.getWorkYears() != null) {
             workYears.setText(staff.getWorkYears().toString());
         }
@@ -140,16 +154,20 @@ public class StaffSetActivity extends AppCompatActivity implements OnEditClickLi
         staff.setIdNumber(idNumber.getText());
         staff.setGender(gender.getText());
         staff.setEthnic(ethnic.getText());
-        staff.setBirthday(birthday.getText());
+        staff.setBirthday(TimeUtils.strToLong(birthday.getText()));
         staff.setAddr(addr.getText());
         staff.setIssueAuth(issueAuth.getText());
-        staff.setSignDate(limitDate.getText1());
-        staff.setExpiryDate(limitDate.getText2());
+        staff.setSignDate(TimeUtils.strToLong(limitDate.getText1()));
+        staff.setExpiryDate(TimeUtils.strToLong(limitDate.getText2()));
+        staff.setPhone(phone.getText());
+        staff.setContactType(contactType.getText());
+        staff.setContactTel(contactTel.getText());
+        staff.setEntryDate(TimeUtils.strToLong(entryDate.getText()));
         staff.setWorkYears(Double.parseDouble(workYears.getText()));
         staff.setDispatch(dispatch.getText());
         staff.setSalary(Double.parseDouble(salary.getText()));
         staff.setCredit(credit.getRating());
-       staffService.save(staff);
+        staffService.save(staff);
         Toast.makeText(this.getApplicationContext(), "保存成功", Toast.LENGTH_SHORT).show();
         this.finish();
     }

@@ -51,7 +51,7 @@ public class StaffListFragment extends BaseFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int staffId = Integer.parseInt(((TextView)view.findViewById(R.id.item_id)).getText().toString());
+                long staffId = Long.parseLong(((TextView)view.findViewById(R.id.item_id)).getText().toString());
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), StaffSetActivity.class);
                 intent.putExtra(Constants.BUNDLE_KEY_STAFFID,  staffId);

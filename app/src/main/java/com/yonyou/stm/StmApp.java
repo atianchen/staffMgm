@@ -2,8 +2,9 @@ package com.yonyou.stm;
 
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
-import com.yonyou.stm.domain.DaoMaster;
-import com.yonyou.stm.domain.DaoSession;
+
+import com.yonyou.stm.dao.DaoMaster;
+import com.yonyou.stm.dao.DaoSession;
 
 /**
  * Created by atian on 2017/11/29.

@@ -1,6 +1,7 @@
 package com.yonyou.stm.domain;
 
 import com.baidu.ocr.sdk.model.IDCardResult;
+import com.yonyou.stm.util.TimeUtils;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
@@ -14,7 +15,7 @@ import org.greenrobot.greendao.annotation.Generated;
 public class Staff extends BaseEntity{
 
     @Id(autoincrement = true)
-    private long id;
+    private Long id;
 
     private String frontImg;//身份证正面（base64编码）
 
@@ -24,7 +25,7 @@ public class Staff extends BaseEntity{
 
     private String idNumber;//身份证号
 
-    private String birthday;//生日
+    private Long birthday;//生日
 
     private String name;//姓名
 
@@ -42,27 +43,36 @@ public class Staff extends BaseEntity{
 
     private String issueAuth;//签发机关
 
-    private String signDate;//有效期限起始
+    private Long signDate;//有效期限起始
 
-    private String expiryDate;//有效期限截止
+    private Long expiryDate;//有效期限截止
+
+    private String phone;//手机号码
+
+    private String contactType;//紧急联系人类型
+
+    private String contactTel;//紧急联系人电话
+
+    private Long entryDate;//入职日期
 
     public Staff(){}
 
     public Staff(IDCardResult result, String frontImg){
         this.addr = result.getAddress().getWords();
         this.idNumber = result.getIdNumber().getWords();
-        this.birthday = addSpot(result.getBirthday().getWords());
+        this.birthday = TimeUtils.strToLong(addSpot(result.getBirthday().getWords()));
         this.name = result.getName().getWords();
         this.gender = result.getGender().getWords();
         this.ethnic = result.getEthnic().getWords();
         this.frontImg = frontImg;
     }
 
-    @Generated(hash = 1257400501)
-    public Staff(long id, String frontImg, String backImg, String addr,
-            String idNumber, String birthday, String name, String gender,
-            String ethnic, Double workYears, String dispatch, Double salary,
-            Float credit, String issueAuth, String signDate, String expiryDate) {
+    @Generated(hash = 141796354)
+    public Staff(Long id, String frontImg, String backImg, String addr, String idNumber,
+            Long birthday, String name, String gender, String ethnic, Double workYears,
+            String dispatch, Double salary, Float credit, String issueAuth, Long signDate,
+            Long expiryDate, String phone, String contactType, String contactTel,
+            Long entryDate) {
         this.id = id;
         this.frontImg = frontImg;
         this.backImg = backImg;
@@ -79,33 +89,21 @@ public class Staff extends BaseEntity{
         this.issueAuth = issueAuth;
         this.signDate = signDate;
         this.expiryDate = expiryDate;
+        this.phone = phone;
+        this.contactType = contactType;
+        this.contactTel = contactTel;
+        this.entryDate = entryDate;
     }
 
     public void setBackInfo(IDCardResult result,String backImg){
         this.issueAuth = result.getIssueAuthority().getWords();
-        this.signDate = addSpot(result.getSignDate().getWords());
-        this.expiryDate = addSpot(result.getExpiryDate().getWords());
+        this.signDate = TimeUtils.strToLong(addSpot(result.getSignDate().getWords()));
+        this.expiryDate = TimeUtils.strToLong(addSpot(result.getExpiryDate().getWords()));
         this.backImg = backImg;
     }
 
     private String addSpot(String str){
         return str.substring(0, 4)+"."+str.substring(4, 6)+"."+str.substring(6);
-    }
-
-    public String getExpiryDate() {
-        return this.expiryDate;
-    }
-
-    public void setExpiryDate(String expiryDate) {
-        this.expiryDate = expiryDate;
-    }
-
-    public String getSignDate() {
-        return this.signDate;
-    }
-
-    public void setSignDate(String signDate) {
-        this.signDate = signDate;
     }
 
     public String getIssueAuth() {
@@ -172,14 +170,6 @@ public class Staff extends BaseEntity{
         this.name = name;
     }
 
-    public String getBirthday() {
-        return this.birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
     public String getIdNumber() {
         return this.idNumber;
     }
@@ -212,12 +202,69 @@ public class Staff extends BaseEntity{
         this.frontImg = frontImg;
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
+
+    public Long getEntryDate() {
+        return this.entryDate;
+    }
+
+    public void setEntryDate(Long entryDate) {
+        this.entryDate = entryDate;
+    }
+
+    public String getContactTel() {
+        return this.contactTel;
+    }
+
+    public void setContactTel(String contactTel) {
+        this.contactTel = contactTel;
+    }
+
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Long getExpiryDate() {
+        return this.expiryDate;
+    }
+
+    public void setExpiryDate(Long expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
+    public Long getSignDate() {
+        return this.signDate;
+    }
+
+    public void setSignDate(Long signDate) {
+        this.signDate = signDate;
+    }
+
+    public Long getBirthday() {
+        return this.birthday;
+    }
+
+    public void setBirthday(Long birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getContactType() {
+        return this.contactType;
+    }
+
+    public void setContactType(String contactType) {
+        this.contactType = contactType;
+    }
+
 
 }

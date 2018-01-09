@@ -64,7 +64,7 @@ public class StaffListAdapter extends BaseAdapter {
         }
         if (staffs != null && staffs.size()>0) {
             holder.name.setText(staffs.get(i).getName());
-            //holder.id.setText(staffs.get(i).getId().toString());
+           holder.id.setText(staffs.get(i).getId().toString());
         }
         return view;
     }

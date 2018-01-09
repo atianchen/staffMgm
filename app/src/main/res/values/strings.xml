@@ -13,6 +13,10 @@
     <string name="staff_addr">地址</string>
     <string name="staff_issueAuth">签发机关</string>
     <string name="staff_limitDate">有效期限</string>
+    <string name="staff_phone">手机号码</string>
+    <string name="staff_contactType">紧急联系人类型</string>
+    <string name="staff_contactTel">紧急联系人电话</string>
+    <string name="staff_entryDate">入职日期</string>
     <string name="staff_workYears">工龄（年）</string>
     <string name="staff_dispatch">外派单位</string>
     <string name="staff_salary">薪资（元）</string>

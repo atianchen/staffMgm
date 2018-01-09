@@ -72,12 +72,35 @@
         yongyou:ter_title="@string/staff_limitDate">
     </com.yonyou.stm.widget.TxtEditRange>
     <com.yonyou.stm.widget.TxtEdit
+        android:id="@+id/edit_phone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        yongyou:te_title="@string/staff_phone">
+    </com.yonyou.stm.widget.TxtEdit>
+    <com.yonyou.stm.widget.TxtEdit
+        android:id="@+id/edit_contactType"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        yongyou:te_title="@string/staff_contactType">
+    </com.yonyou.stm.widget.TxtEdit>
+    <com.yonyou.stm.widget.TxtEdit
+        android:id="@+id/edit_contactTel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        yongyou:te_title="@string/staff_contactTel">
+    </com.yonyou.stm.widget.TxtEdit>
+    <com.yonyou.stm.widget.TxtEdit
+        android:id="@+id/edit_entryDate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        yongyou:te_title="@string/staff_entryDate">
+    </com.yonyou.stm.widget.TxtEdit>
+    <com.yonyou.stm.widget.TxtEdit
         android:id="@+id/edit_workYears"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         yongyou:te_title="@string/staff_workYears"
         yongyou:te_hint="@string/hint_number">
-        <requestFocus />
     </com.yonyou.stm.widget.TxtEdit>
     <com.yonyou.stm.widget.TxtEdit
         android:id="@+id/edit_dispatch"

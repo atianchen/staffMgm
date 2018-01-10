@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,6 +15,8 @@ import com.yonyou.stm.R;
 import com.yonyou.stm.ctx.Constants;
 import com.yonyou.stm.widget.BaseFragment;
 import com.yonyou.stm.widget.StaffListAdapter;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Created by lsq on 2018/1/7
@@ -42,7 +46,20 @@ public class StaffListFragment extends BaseFragment {
         view =  inflater.inflate(R.layout.staff_list, container, false);
         listView =  view.findViewById(R.id.listView);
         initListView();
+        initEventListaner();
         return view;
+    }
+
+    private void initEventListaner(){
+        ((Button)view.findViewById(R.id.btn_search)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String key = ((EditText)StaffListFragment.this.view.findViewById(R.id.edit_key)).getText().toString();
+                if(StringUtils.isNotBlank(key)){
+                    adapter.notifyDataChanged(key);
+                }
+            }
+        });
     }
 
     private void initListView(){

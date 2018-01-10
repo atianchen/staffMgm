@@ -24,6 +24,7 @@
 
     <string name="btn_save">保存</string>
     <string name="btn_back">返回</string>
+    <string name="btn_search">搜索</string>
 
     <string name="hint_number">请输入数字</string>
 

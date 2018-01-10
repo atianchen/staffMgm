@@ -169,10 +169,6 @@ public class HomeFragment extends BaseFragment implements Runnable {
         });
     }
 
-    private void recIDCard() {
-
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // 相机拍照完成后，返回图片路径
@@ -187,9 +183,8 @@ public class HomeFragment extends BaseFragment implements Runnable {
                     }else{
                         this.imgViewBack.setImageURI(FileUtils.getFileUri(this.getContext(), mTmpFile));
                     }
-                   Thread thread = new Thread(HomeFragment.this);
+                    Thread thread = new Thread(HomeFragment.this);
                     thread.start();
-                   //recIDCard();
                 }
             } else {
                 if (mTmpFile != null && mTmpFile.exists()) {
@@ -198,6 +193,15 @@ public class HomeFragment extends BaseFragment implements Runnable {
             }
         }
     }
+
+    public String getErrorToastStr(){
+        if(idCardSide == IDCardParams.ID_CARD_SIDE_FRONT){
+            return "正面识别识别，请重新拍摄正面";
+        }else{
+            return "背面识别识别，请重新拍摄背面";
+        }
+    }
+
     public void run()
     {
         IDCardParams param = new IDCardParams();
@@ -215,20 +219,20 @@ public class HomeFragment extends BaseFragment implements Runnable {
                         btn.setClickable(true);
                         if (idCardSide == IDCardParams.ID_CARD_SIDE_FRONT) {
                             //拍照传值，正背面图片base64编码过大，无法进行页面传值，暂传图片路径
-                            staff = new Staff(result, mTmpFile.getAbsolutePath()/*ImgUtils.getBase64(getActivity(), HomeFragment.this.imageUri)*/);
+                            staff = new Staff(result, mTmpFile.getAbsolutePath());
                             idCardSide = IDCardParams.ID_CARD_SIDE_BACK;
                             Toast.makeText(getActivity(), "正面识别成功，请拍摄背面", Toast.LENGTH_SHORT).show();
                         } else {
+                            staff.setBackInfo(result, mTmpFile.getAbsolutePath());
                             idCardSide = IDCardParams.ID_CARD_SIDE_FRONT;
-                            staff.setBackInfo(result, mTmpFile.getAbsolutePath()/*ImgUtils.getBase64(getActivity(), HomeFragment.this.imageUri)*/);
-                            Toast.makeText(getActivity(), "背面识别成功", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent();
                             intent.setClass(getActivity(), StaffSetActivity.class);
                             intent.putExtra(Constants.BUNDLE_KEY_STAFF, staff);
                             getActivity().startActivity(intent);
                         }
                     }catch (Exception e){
-                        Toast.makeText(getActivity(), "识别失败，请重新拍照", Toast.LENGTH_SHORT).show();
+                        btn.setClickable(true);
+                        Toast.makeText(getActivity(), getErrorToastStr(), Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
 
@@ -237,7 +241,8 @@ public class HomeFragment extends BaseFragment implements Runnable {
 
             @Override
             public void onError(OCRError error) {
-                Toast.makeText(getActivity(), "识别失败，请重新拍照", Toast.LENGTH_SHORT).show();
+                btn.setClickable(true);
+                Toast.makeText(getActivity(), getErrorToastStr(), Toast.LENGTH_SHORT).show();
             }
         });
        /* String host = "http://dm-51.data.aliyun.com";

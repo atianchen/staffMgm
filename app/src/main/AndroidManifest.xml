@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".action.StaffSetActivity" android:label="@string/app_name"></activity>
+        <activity android:name=".action.PhotoViewActivity" android:label="@string/app_name"></activity>
 
 
         <provider

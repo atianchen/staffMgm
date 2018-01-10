@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yonyou.stm.R;
+import com.yonyou.stm.widget.event.OnImgClickListener;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -60,6 +61,24 @@ public class TxtImg extends LinearLayout {
     public void setImageBitmaps(Bitmap bitmap1,Bitmap bitmap2) {
         imgView1.setImageBitmap(bitmap1);
         imgView2.setImageBitmap(bitmap2);
+    }
+
+    public void setOnImg1ClickListener(final OnImgClickListener listener){
+        imgView1.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onImgClick(v);
+            }
+        });
+    }
+
+    public void setOnImg2ClickListener(final OnImgClickListener listener){
+        imgView1.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onImgClick(v);
+            }
+        });
     }
 
 }

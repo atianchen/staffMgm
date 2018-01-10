@@ -14,7 +14,7 @@
             android:id="@+id/txtstar_title"
             android:layout_width="350dp"
             android:layout_weight="2"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="20dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textSize="16sp"
@@ -23,6 +23,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginLeft="10dp"
         android:layout_weight="1">
         <RatingBar
             android:id="@+id/txtstar_star"

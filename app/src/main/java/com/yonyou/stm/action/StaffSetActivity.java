@@ -22,19 +22,21 @@ import com.yonyou.stm.widget.TxtEditRange;
 import com.yonyou.stm.widget.TxtImg;
 import com.yonyou.stm.widget.TxtStar;
 import com.yonyou.stm.widget.event.OnEditClickListener;
+import com.yonyou.stm.widget.event.OnImgClickListener;
 
 import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
 import java.sql.Time;
 import java.text.DecimalFormat;
+import java.util.Calendar;
 import java.util.regex.Pattern;
 
 /**
  * Created by lsq on 2018/1/7.
  */
 
-public class StaffSetActivity extends AppCompatActivity implements OnEditClickListener{
+public class StaffSetActivity extends AppCompatActivity implements OnEditClickListener,OnImgClickListener {
 
    private StaffService staffService;
     private Staff staff;
@@ -57,6 +59,9 @@ public class StaffSetActivity extends AppCompatActivity implements OnEditClickLi
     private TxtEdit salary;
     private TxtStar credit;
 
+    private String frontImg;
+    private String backImg;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +72,13 @@ public class StaffSetActivity extends AppCompatActivity implements OnEditClickLi
         if(intent.getExtras().containsKey(Constants.BUNDLE_KEY_STAFF)){
             //照片传值
             staff = (Staff)intent.getExtras().getSerializable(Constants.BUNDLE_KEY_STAFF);
-            staff.setFrontImg(ImgUtils.getBase64(this, FileUtils.getFileUri(this,new File(staff.getFrontImg()))));
-            staff.setBackImg(ImgUtils.getBase64(this, FileUtils.getFileUri(this,new File(staff.getBackImg()))));
+            frontImg = ImgUtils.getBase64(this, FileUtils.getFileUri(this,new File(staff.getFrontImg())));
+            backImg = ImgUtils.getBase64(this, FileUtils.getFileUri(this,new File(staff.getBackImg())));
         }else{
             //列表传值
            staff = staffService.load((Long) intent.getExtras().get(Constants.BUNDLE_KEY_STAFFID));
+           frontImg = staff.getFrontImg();
+           backImg = staff.getBackImg();
         }
 
         init();
@@ -109,12 +116,15 @@ public class StaffSetActivity extends AppCompatActivity implements OnEditClickLi
             }
         });
         birthday.setOnEditClickListener(this);
+        entryDate.setOnEditClickListener(this);
         limitDate.setOnEdit1ClickListener(this);
         limitDate.setOnEdit2ClickListener(this);
+        img.setOnImg1ClickListener(this);
+        img.setOnImg2ClickListener(this);
     }
 
     private void setValue(){
-        img.setImageBitmaps(ImgUtils.base64ToBitmap(staff.getFrontImg()),ImgUtils.base64ToBitmap(staff.getBackImg()));
+        img.setImageBitmaps(ImgUtils.base64ToBitmap(frontImg),ImgUtils.base64ToBitmap(backImg));
         name.setText(staff.getName());
         idNumber.setText(staff.getIdNumber());
         gender.setText(staff.getGender());
@@ -150,6 +160,8 @@ public class StaffSetActivity extends AppCompatActivity implements OnEditClickLi
             Toast.makeText(this.getApplicationContext(), "薪资请输入数字", Toast.LENGTH_SHORT).show();
             return;
         }
+        staff.setFrontImg(frontImg);
+        staff.setBackImg(backImg);
         staff.setName(name.getText());
         staff.setIdNumber(idNumber.getText());
         staff.setGender(gender.getText());
@@ -190,6 +202,13 @@ public class StaffSetActivity extends AppCompatActivity implements OnEditClickLi
 
     protected void showDatePickDlg(final View arg0) {
         String[] date = ((EditText)arg0).getText().toString().split("\\.");
+        if(date.length<3){
+            date = new String[3];
+            Calendar cal = Calendar.getInstance();
+            date[0] = String.valueOf(cal.get(Calendar.YEAR)+1);
+            date[1] = String.valueOf(cal.get(Calendar.MONTH)-1);
+            date[2] = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+        }
         DatePickerDialog datePickerDialog = new DatePickerDialog(StaffSetActivity.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -198,5 +217,15 @@ public class StaffSetActivity extends AppCompatActivity implements OnEditClickLi
             }
         }, Integer.parseInt(date[0]), Integer.parseInt(date[1])-1, Integer.parseInt(date[2]));
         datePickerDialog.show();
+    }
+
+    @Override
+    public void onImgClick(View arg0) {
+        Intent intent = new Intent(StaffSetActivity.this,PhotoViewActivity.class);
+        if(staff.getId()!=null)
+            intent.putExtra(Constants.BUNDLE_KEY_STAFFID,  staff.getId());
+        else
+            intent.putExtra(Constants.BUNDLE_KEY_STAFF,  staff);
+        startActivity(intent);
     }
 }

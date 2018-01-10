@@ -1,12 +1,14 @@
 package com.yonyou.stm.widget;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -18,6 +20,8 @@ import com.yonyou.stm.R;
 import com.yonyou.stm.widget.event.OnEditClickListener;
 
 import org.apache.commons.lang.StringUtils;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * 属性名和属性值输入

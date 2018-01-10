@@ -1,18 +1,22 @@
 package com.yonyou.stm.widget;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yonyou.stm.R;
 import com.yonyou.stm.widget.event.OnEditClickListener;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * 属性和属性值输入（区间）
@@ -73,7 +77,7 @@ public class TxtEditRange extends LinearLayout {
     }
 
     public void setOnEdit1ClickListener(final OnEditClickListener listener) {
-        content1.setOnClickListener(new OnClickListener() {
+      content1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 listener.onClick(arg0);
@@ -88,7 +92,7 @@ public class TxtEditRange extends LinearLayout {
     }
 
     public void setOnEdit2ClickListener(final OnEditClickListener listener) {
-        content2.setOnClickListener(new OnClickListener() {
+       content2.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 listener.onClick(arg0);

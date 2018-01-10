@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class TimeUtils {
 
-    private static SimpleDateFormat sdf= new SimpleDateFormat("yyyy.MMM.dd");
+    private static SimpleDateFormat sdf= new SimpleDateFormat("yyyy.MM.dd");
 
     /**
      * 字符串（yyyy.MMM.dd）转时间
@@ -28,6 +28,8 @@ public class TimeUtils {
     }
 
     public static String longToStr(Long time){
+        if(time!=null)
            return sdf.format(new Date(time));
+        return null;
     }
 }

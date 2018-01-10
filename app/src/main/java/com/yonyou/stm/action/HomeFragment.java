@@ -196,9 +196,9 @@ public class HomeFragment extends BaseFragment implements Runnable {
 
     public String getErrorToastStr(){
         if(idCardSide == IDCardParams.ID_CARD_SIDE_FRONT){
-            return "正面识别识别，请重新拍摄正面";
+            return "正面识别失败，请重新拍摄正面";
         }else{
-            return "背面识别识别，请重新拍摄背面";
+            return "背面识别失败，请重新拍摄背面";
         }
     }
 

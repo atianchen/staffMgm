@@ -18,4 +18,9 @@
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
+    <style name="editSearch">
+        <item name="android:background">@drawable/edit_search</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
 </resources>

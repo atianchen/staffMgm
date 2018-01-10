@@ -2,6 +2,8 @@ package com.yonyou.stm.action;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +24,7 @@ import org.apache.commons.lang.StringUtils;
  * Created by lsq on 2018/1/7
  */
 
-public class StaffListFragment extends BaseFragment {
+public class StaffListFragment extends BaseFragment implements TextWatcher {
 
     private View view;
     private ListView listView;
@@ -46,20 +48,8 @@ public class StaffListFragment extends BaseFragment {
         view =  inflater.inflate(R.layout.staff_list, container, false);
         listView =  view.findViewById(R.id.listView);
         initListView();
-        initEventListaner();
+        ((EditText)view.findViewById(R.id.edit_key)).addTextChangedListener(this);
         return view;
-    }
-
-    private void initEventListaner(){
-        ((Button)view.findViewById(R.id.btn_search)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String key = ((EditText)StaffListFragment.this.view.findViewById(R.id.edit_key)).getText().toString();
-                if(StringUtils.isNotBlank(key)){
-                    adapter.notifyDataChanged(key);
-                }
-            }
-        });
     }
 
     private void initListView(){
@@ -77,4 +67,17 @@ public class StaffListFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        adapter.notifyDataChanged(charSequence.toString());
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+    }
 }

@@ -4,22 +4,16 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-    <RelativeLayout android:layout_height="50dp"
-        android:layout_width="match_parent"
-        android:layout_margin="10dp">
         <EditText
             android:id="@+id/edit_key"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent">
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            style="@style/editSearch"
+            android:hint="@string/hint_search"
+            android:gravity="center"
+            >
         </EditText>
-        <Button
-            android:id="@+id/btn_search"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            style="@style/btnSave"
-            android:text="@string/btn_search"
-            android:layout_alignParentRight="true"/>
-    </RelativeLayout>
     <ListView
         android:id="@+id/listView"
         android:layout_width="fill_parent"

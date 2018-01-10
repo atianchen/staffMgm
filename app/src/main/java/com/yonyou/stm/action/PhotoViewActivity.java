@@ -39,6 +39,8 @@ public class PhotoViewActivity extends AppCompatActivity {
 
     private List<Bitmap> imgList;
 
+    private Integer seq;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +61,7 @@ public class PhotoViewActivity extends AppCompatActivity {
             imgList.add(ImgUtils.base64ToBitmap(staff.getFrontImg()));
             imgList.add(ImgUtils.base64ToBitmap(staff.getBackImg()));
         }
-
+        seq = (Integer)intent.getExtras().getSerializable(Constants.BUNDLE_KEY_IDCARDIMG_SQE);
         initViewPager();
     }
 
@@ -82,6 +84,7 @@ public class PhotoViewActivity extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(2);
         //设置每页之间的左右间隔
         viewPager.setPageMargin(10);
+        viewPager.setCurrentItem(seq-1);
         //将容器的触摸事件反馈给ViewPager
         viewPagerContainer.setOnTouchListener(new View.OnTouchListener() {
             @Override

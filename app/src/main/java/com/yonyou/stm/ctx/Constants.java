@@ -25,5 +25,6 @@ public class Constants {
 
     public final static String BUNDLE_KEY_STAFF = "staff";
     public final static String BUNDLE_KEY_STAFFID = "staffId";
+    public final static String BUNDLE_KEY_IDCARDIMG_SQE = "idCardImg_sqe";
 
 }

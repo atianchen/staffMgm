@@ -7,5 +7,5 @@ import android.view.View;
  */
 
 public interface OnImgClickListener {
-    void onImgClick(View arg0);
+    void onImgClick(View arg0,Integer seq);
 }

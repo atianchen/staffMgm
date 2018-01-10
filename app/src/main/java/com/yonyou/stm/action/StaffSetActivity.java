@@ -244,12 +244,13 @@ public class StaffSetActivity extends AppCompatActivity implements OnEditClickLi
     }
 
     @Override
-    public void onImgClick(View arg0) {
+    public void onImgClick(View arg0,Integer seq) {
         Intent intent = new Intent(StaffSetActivity.this,PhotoViewActivity.class);
         if(staff.getId()!=null)
             intent.putExtra(Constants.BUNDLE_KEY_STAFFID,  staff.getId());
         else
             intent.putExtra(Constants.BUNDLE_KEY_STAFF,  staff);
+        intent.putExtra(Constants.BUNDLE_KEY_IDCARDIMG_SQE,seq);
         startActivity(intent);
     }
 }

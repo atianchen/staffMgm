@@ -67,16 +67,16 @@ public class TxtImg extends LinearLayout {
         imgView1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onImgClick(v);
+                listener.onImgClick(v,1);
             }
         });
     }
 
     public void setOnImg2ClickListener(final OnImgClickListener listener){
-        imgView1.setOnClickListener(new OnClickListener() {
+        imgView2.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onImgClick(v);
+                listener.onImgClick(v,2);
             }
         });
     }

@@ -27,7 +27,7 @@ public class PhotoViewAdapter extends PagerAdapter {
         this.views = new ArrayList<ImageView>();
         for(Bitmap b:bitmaps){
             ImageView imageView = new ImageView(activity);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             imageView.setImageBitmap(b);
             views.add(imageView);
         }

@@ -152,12 +152,28 @@ public class StaffSetActivity extends AppCompatActivity implements OnEditClickLi
     }
 
     private void save(){
-        if(!isNumeric(workYears.getText())){
+        if(StringUtils.isNotBlank(workYears.getText()) && !isNumeric(workYears.getText())){
             Toast.makeText(this.getApplicationContext(), "工龄请输入数字", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(!isNumeric(salary.getText())){
+        if(StringUtils.isNotBlank(salary.getText()) && !isNumeric(salary.getText())){
             Toast.makeText(this.getApplicationContext(), "薪资请输入数字", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(StringUtils.isBlank(phone.getText())){
+            Toast.makeText(this.getApplicationContext(), "请输入手机号码", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(StringUtils.isBlank(contactType.getText())){
+            Toast.makeText(this.getApplicationContext(), "请输入紧急联系人类型", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(StringUtils.isBlank(contactTel.getText())){
+            Toast.makeText(this.getApplicationContext(), "请输入紧急联系人电话", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(StringUtils.isBlank(entryDate.getText())){
+            Toast.makeText(this.getApplicationContext(), "请输入入职日期", Toast.LENGTH_SHORT).show();
             return;
         }
         staff.setFrontImg(frontImg);
@@ -175,9 +191,17 @@ public class StaffSetActivity extends AppCompatActivity implements OnEditClickLi
         staff.setContactType(contactType.getText());
         staff.setContactTel(contactTel.getText());
         staff.setEntryDate(TimeUtils.strToLong(entryDate.getText()));
-        staff.setWorkYears(Double.parseDouble(workYears.getText()));
+        if(StringUtils.isNotBlank(workYears.getText())){
+            staff.setWorkYears(Double.parseDouble(workYears.getText()));
+        }else{
+            staff.setWorkYears(null);
+        }
         staff.setDispatch(dispatch.getText());
-        staff.setSalary(Double.parseDouble(salary.getText()));
+        if(StringUtils.isNotBlank(salary.getText())) {
+            staff.setSalary(Double.parseDouble(salary.getText()));
+        }else{
+            staff.setSalary(null);
+        }
         staff.setCredit(credit.getRating());
         staffService.save(staff);
         Toast.makeText(this.getApplicationContext(), "保存成功", Toast.LENGTH_SHORT).show();
@@ -205,8 +229,8 @@ public class StaffSetActivity extends AppCompatActivity implements OnEditClickLi
         if(date.length<3){
             date = new String[3];
             Calendar cal = Calendar.getInstance();
-            date[0] = String.valueOf(cal.get(Calendar.YEAR)+1);
-            date[1] = String.valueOf(cal.get(Calendar.MONTH)-1);
+            date[0] = String.valueOf(cal.get(Calendar.YEAR));
+            date[1] = String.valueOf(cal.get(Calendar.MONTH)+1);
             date[2] = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
         }
         DatePickerDialog datePickerDialog = new DatePickerDialog(StaffSetActivity.this, new DatePickerDialog.OnDateSetListener() {

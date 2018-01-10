@@ -85,9 +85,7 @@ public class TxtEdit extends LinearLayout {
     }
 
     public String getText() {
-        if(editContent.getVisibility() == VISIBLE){
-            text = editContent.getText().toString();
-        }
+        text = editContent.getText().toString();
         return text;
     }
 

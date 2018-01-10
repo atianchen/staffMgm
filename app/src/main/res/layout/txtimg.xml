@@ -25,7 +25,7 @@
             android:layout_weight="1"
             android:orientation="horizontal"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="-10dp">
+            android:layout_marginLeft="-20dp">
         <ImageView
             android:id="@+id/txtimg_img1"
             android:layout_width="100dp"

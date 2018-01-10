@@ -70,7 +70,7 @@ public class PhotoViewActivity extends AppCompatActivity {
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                 DeviceUtils.getWindowWidth(this),
-                DeviceUtils.getWindowHeight(this) * 2 / 5);
+                DeviceUtils.getWindowHeight(this));// * 2 / 5
         //clipChild用来定义他的子控件是否要在他应有的边界内进行绘制。 默认情况下，clipChild被设置为true。 也就是不允许进行扩展绘制。
         viewPager.setClipChildren(false);
         viewPagerContainer.setClipChildren(false);

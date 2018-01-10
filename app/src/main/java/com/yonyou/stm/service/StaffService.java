@@ -20,7 +20,10 @@ public class StaffService implements BaseService<Staff>{
 
     @Override
     public void save(Staff entity) {
-        staffDao.insert(entity);
+        if(entity.getId()!=null)
+            staffDao.update(entity);
+        else
+            staffDao.insert(entity);
     }
 
     @Override

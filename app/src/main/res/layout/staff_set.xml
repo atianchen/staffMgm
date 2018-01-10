@@ -75,25 +75,29 @@
         android:id="@+id/edit_phone"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        yongyou:te_title="@string/staff_phone">
+        yongyou:te_title="@string/staff_phone"
+        yongyou:te_required="true">
     </com.yonyou.stm.widget.TxtEdit>
     <com.yonyou.stm.widget.TxtEdit
         android:id="@+id/edit_contactType"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        yongyou:te_title="@string/staff_contactType">
+        yongyou:te_title="@string/staff_contactType"
+        yongyou:te_required="true">
     </com.yonyou.stm.widget.TxtEdit>
     <com.yonyou.stm.widget.TxtEdit
         android:id="@+id/edit_contactTel"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        yongyou:te_title="@string/staff_contactTel">
+        yongyou:te_title="@string/staff_contactTel"
+        yongyou:te_required="true">
     </com.yonyou.stm.widget.TxtEdit>
     <com.yonyou.stm.widget.TxtEdit
         android:id="@+id/edit_entryDate"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        yongyou:te_title="@string/staff_entryDate">
+        yongyou:te_title="@string/staff_entryDate"
+        yongyou:te_required="true">
     </com.yonyou.stm.widget.TxtEdit>
     <com.yonyou.stm.widget.TxtEdit
         android:id="@+id/edit_workYears"

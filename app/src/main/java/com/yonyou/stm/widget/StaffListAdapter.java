@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.yonyou.stm.R;
 import com.yonyou.stm.domain.Staff;
+import com.yonyou.stm.service.LogService;
 import com.yonyou.stm.service.StaffService;
 
 import org.apache.commons.lang.StringUtils;
@@ -64,7 +65,7 @@ public class StaffListAdapter extends BaseAdapter {
             holder.id = (TextView) view.findViewById(R.id.item_id);
             holder.name = (TextView) view.findViewById(R.id.item_content);
         }
-        if (staffs != null && staffs.size()>0) {
+        if (staffs != null && staffs.size()>0 && holder!=null) {
             holder.name.setText(staffs.get(i).getName());
             holder.id.setText(staffs.get(i).getId().toString());
         }
@@ -72,7 +73,11 @@ public class StaffListAdapter extends BaseAdapter {
     }
 
     public void notifyDataChanged(String key){
-        staffs = staffService.loadByNameOrNumber(key);
+        if(StringUtils.isNotBlank(key)) {
+            staffs = staffService.loadByNameOrNumber(key);
+        }else{
+            staffs = staffService.loadAll();
+        }
         this.notifyDataSetChanged();
     }
 }

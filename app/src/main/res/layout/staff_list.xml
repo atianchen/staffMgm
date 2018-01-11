@@ -2,18 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:yonyou="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/edit_key"
-            android:layout_height="50dp"
-            android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            style="@style/editSearch"
-            android:hint="@string/hint_search"
-            android:gravity="center"
-            >
-        </EditText>
+    <com.yonyou.stm.widget.SearchEdit
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@drawable/edit_search"
+        android:textSize="14sp"
+        android:paddingLeft="5dp"
+        android:singleLine="true"
+        android:imeOptions="actionSearch"
+        yonyou:se_text="@string/hint_search"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        />
     <ListView
         android:id="@+id/listView"
         android:layout_width="fill_parent"

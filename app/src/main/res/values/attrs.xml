@@ -28,4 +28,10 @@
         <attr name="ter_required" format="boolean"/>
         <attr name="ter_bottom" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="SearchEdit">
+        <attr name="se_imgWidth" format="dimension" />
+        <attr name="se_textSize" format="dimension" />
+        <attr name="se_textColor" format="color" />
+        <attr name="se_text" format="string" />
+    </declare-styleable>
 </resources>

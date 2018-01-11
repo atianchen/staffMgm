@@ -15,7 +15,9 @@ import android.widget.TextView;
 
 import com.yonyou.stm.R;
 import com.yonyou.stm.ctx.Constants;
+import com.yonyou.stm.service.LogService;
 import com.yonyou.stm.widget.BaseFragment;
+import com.yonyou.stm.widget.SearchEdit;
 import com.yonyou.stm.widget.StaffListAdapter;
 
 import org.apache.commons.lang.StringUtils;
@@ -48,7 +50,7 @@ public class StaffListFragment extends BaseFragment implements TextWatcher {
         view =  inflater.inflate(R.layout.staff_list, container, false);
         listView =  view.findViewById(R.id.listView);
         initListView();
-        ((EditText)view.findViewById(R.id.edit_key)).addTextChangedListener(this);
+        ((SearchEdit)view.findViewById(R.id.search)).addTextChangedListener(this);
         return view;
     }
 
@@ -69,7 +71,6 @@ public class StaffListFragment extends BaseFragment implements TextWatcher {
 
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
     }
 
     @Override
@@ -79,5 +80,6 @@ public class StaffListFragment extends BaseFragment implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable editable) {
+        LogService.log("afterTextChanged");
     }
 }

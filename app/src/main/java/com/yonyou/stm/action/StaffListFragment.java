@@ -80,6 +80,5 @@ public class StaffListFragment extends BaseFragment implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable editable) {
-        LogService.log("afterTextChanged");
     }
 }
